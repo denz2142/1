@@ -1,0 +1,72 @@
+
+#######################################################################################
+from keras.models import Sequential
+from keras.layers import Dense, Dropout
+from sklearn.model_selection import train_test_split
+import numpy
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+from sklearn.metrics import classification_report, confusion_matrix
+
+numpy.random.seed(2)
+
+dataset = numpy.loadtxt("/content/dataset_lf.csv", delimiter=";")
+
+X = dataset[:,0:29]
+Y = dataset[:,29]
+
+x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.25, random_state=30)
+
+model = Sequential()
+model.add(Dense(29, input_dim=29, activation='relu')) 
+model.add(Dense(16, activation='relu'))
+model.add(Dense(8, activation='relu'))
+model.add(Dense(1, activation='sigmoid')) 
+
+model.compile(loss="binary_crossentropy", optimizer="rmsprop", metrics=['accuracy'])
+
+history = model.fit(x_train, y_train, epochs = 200, batch_size=200, validation_data=(x_test, y_test))
+
+# save the model
+model.save('weights.h5')
+scores = model.evaluate(x_test, y_test)
+predictions = model.predict(x_test)
+print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
+Y_pred = model.predict(x_train)
+Y_new = []
+tmp = 0
+for i in Y_pred:
+  tmp = i[0]
+  if tmp > 0.5:
+    Y_new.append(1)
+  else:
+    Y_new.append(0)
+target_names = ['Virus', 'Not virus']
+conf_matrix = confusion_matrix(y_train, Y_new)
+plt.figure(figsize=(12,6))
+sns.heatmap(conf_matrix,
+annot=True,
+xticklabels=target_names,
+yticklabels=target_names,
+fmt="d")
+plt.ylabel('Predicted')
+plt.xlabel('Actual')
+plt.title('Confusion matrix')
+plt.show()
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.show()
+
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.show()
+###########################################
