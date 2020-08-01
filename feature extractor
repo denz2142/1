@@ -1,0 +1,90 @@
+import json
+import csv
+import pandas as pd
+import os
+
+x = open("/content/zeusbin_0a2dbf673cfb5cf5047d16d217c735ff.ex0.json")
+data = json.load(x)
+x.close()
+
+#######################################
+
+f = csv.writer(open("/content/good.csv", "w+"))
+f.writerow(["NumberOfSections", "NumberOfSymbols", "SizeOfOptionalHeader", "Characteristics", "PointerToSymbolTable","DllCharacteristics","BaseOfCode","SizeOfUninitializedData","SizeOfInitializedData","SizeOfHeaders","Magic","SizeOfCode","AddressOfEntryPoint","FileAlignment","SectionAlignment","SizeOfImage","MinorSubsystemVersion","CheckSum","e_cblp","e_crlc","e_ovno","e_minalloc","e_csum","e_maxalloc","e_lfarlc","e_oemid","e_oeminfo","e_sp","e_magic","Virus"])
+with open("/content/data_go.csv") as f_obj:
+  data = csv.DictReader(f_obj, delimiter=';')
+#data = csv.DictReader("/content/gooware.csv", delimiter = ';')
+
+  for row in data:
+    f.writerow([row["NumberOfSections"],
+      row["NumberOfSymbols"],
+      row["SizeOfOptionalHeader"],
+      row["Characteristics"],
+      row["PointerToSymbolTable"],
+      row["DllCharacteristics"],
+      row["BaseOfCode"],
+      row["SizeOfUninitializedData"],
+      row["SizeOfInitializedData"],
+      row["SizeOfHeaders"],
+      row["Magic"],
+      row["SizeOfCode"],
+      row["AddressOfEntryPoint"],
+      row["FileAlignment"],
+      row["SectionAlignment"],
+      row["SizeOfImage"],
+      row["MinorSubsystemVersion"],
+      row["CheckSum"],
+      row["e_cblp"],
+      row["e_crlc"],
+      row["e_ovno"],
+      row["e_minalloc"],
+      row["e_csum"],
+      row["e_maxalloc"],
+      row["e_lfarlc"],
+      row["e_oemid"],
+      row["e_oeminfo"],
+      row["e_sp"],
+      row["e_magic"],0])
+########################################
+f = csv.writer(open("/content/testvir1.csv", "w+"))
+f.writerow(["NumberOfSections", "NumberOfSymbols", "SizeOfOptionalHeader", "Characteristics", "PointerToSymbolTable","DllCharacteristics","BaseOfCode","SizeOfUninitializedData","SizeOfInitializedData","SizeOfHeaders","Magic","SizeOfCode","AddressOfEntryPoint","FileAlignment","SectionAlignment","SizeOfImage","MinorSubsystemVersion","CheckSum","e_cblp","e_crlc","e_ovno","e_minalloc","e_csum","e_maxalloc","e_lfarlc","e_oemid","e_oeminfo","e_sp","e_magic","Virus"])
+dir = ("/content/Z")
+files = os.listdir(dir)
+for file in files:
+  print(file)
+for file in files:
+  x = open("/content/Z/"+file)
+  data = json.load(x)
+  x.close()
+  f.writerow([data ["FILE_HEADER"]["NumberOfSections"]["Value"],
+            data ["FILE_HEADER"]["NumberOfSymbols"]["Value"],
+            data ["FILE_HEADER"]["SizeOfOptionalHeader"]["Value"],
+            data ["FILE_HEADER"]["Characteristics"]["Value"],
+            data ["FILE_HEADER"]["PointerToSymbolTable"]["Value"],
+            data ["OPTIONAL_HEADER"]["DllCharacteristics"]["Value"],
+            data ["OPTIONAL_HEADER"]["BaseOfCode"]["Value"],
+            data ["OPTIONAL_HEADER"]["SizeOfUninitializedData"]["Value"],
+            data ["OPTIONAL_HEADER"]["SizeOfInitializedData"]["Value"],
+            data ["OPTIONAL_HEADER"]["SizeOfHeaders"]["Value"],
+            data ["OPTIONAL_HEADER"]["Magic"]["Value"],
+            data ["OPTIONAL_HEADER"]["SizeOfCode"]["Value"],
+            data ["OPTIONAL_HEADER"]["AddressOfEntryPoint"]["Value"],
+            data ["OPTIONAL_HEADER"]["FileAlignment"]["Value"],
+            data ["OPTIONAL_HEADER"]["SectionAlignment"]["Value"],
+            data ["OPTIONAL_HEADER"]["SizeOfImage"]["Value"],
+            data ["OPTIONAL_HEADER"]["MinorSubsystemVersion"]["Value"],
+            data ["OPTIONAL_HEADER"]["CheckSum"]["Value"],
+            data ["DOS_HEADER"]["e_cblp"]["Value"],
+            data ["DOS_HEADER"]["e_crlc"]["Value"],
+            data ["DOS_HEADER"]["e_ovno"]["Value"],
+            data ["DOS_HEADER"]["e_minalloc"]["Value"],
+            data ["DOS_HEADER"]["e_csum"]["Value"],
+            data ["DOS_HEADER"]["e_maxalloc"]["Value"],
+            data ["DOS_HEADER"]["e_lfarlc"]["Value"],
+            data ["DOS_HEADER"]["e_oemid"]["Value"],
+            data ["DOS_HEADER"]["e_oeminfo"]["Value"],
+            data ["DOS_HEADER"]["e_sp"]["Value"],
+            data ["DOS_HEADER"]["e_magic"]["Value"],1])
+
+
+
